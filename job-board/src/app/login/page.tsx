@@ -1,14 +1,13 @@
 'use client';
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@/lib/supabase/client'
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Database } from '@/types/supabase';
 
 export default function LoginPage() {
-  const supabase = createClientComponentClient<Database>();
+  const supabase = createClient();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,6 +15,7 @@ export default function LoginPage() {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
+        router.refresh(); 
         router.push('/');
       }
     });
@@ -31,8 +31,8 @@ export default function LoginPage() {
           supabaseClient={supabase}
           appearance={{ theme: ThemeSupa }}
           theme="dark"
-          providers={['github', 'google']}
-          redirectTo={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/callback`}
+          providers={['google', 'apple']}
+          redirectTo={`${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`}
         />
       </div>
     </div>

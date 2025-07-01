@@ -1,18 +1,27 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
-import { Database } from '@/types/supabase';
 
 import { postJobAction } from './action';
 
 export default async function PostJobPage() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
     redirect('/login');
+  }
+
+  const { data: company, error: companyError } = await supabase
+    .from('companies')
+    .select('id, name')
+    .eq('owned_by', user.id)
+    .single();
+
+  if (companyError || !company) {
+    // Nanti ini bisa di-redirect ke halaman untuk membuat profil perusahaan
+    throw new Error('Company profile not found for this user.');
   }
 
   return (
@@ -27,7 +36,7 @@ export default async function PostJobPage() {
         </div>
         <div>
           <label htmlFor="company_name" className="block text-sm font-medium text-gray-300">Company Name</label>
-          <input type="text" name="company_name" id="company_name" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+          <input value={company.name} disabled type="text" name="company_name" id="company_name" className="mt-1 text-muted block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
         </div>
         <div>
           <label htmlFor="location" className="block text-sm font-medium text-gray-300">Location</label>
@@ -51,7 +60,10 @@ export default async function PostJobPage() {
           <input type="number" name="salary" id="salary" placeholder="e.g., 10000000" className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
         </div>
         <div>
-          <button type="submit" className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button 
+            type="submit" 
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
             Post Job
           </button>
         </div>

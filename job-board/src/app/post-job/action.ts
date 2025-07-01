@@ -1,13 +1,11 @@
 'use server';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { Database } from '@/types/supabase';
 
 export async function postJobAction(formData: FormData) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -16,8 +14,19 @@ export async function postJobAction(formData: FormData) {
     throw new Error('User is not authenticated.');
   }
 
+  const { data: company, error: companyError } = await supabase
+    .from('companies')
+    .select('id, name')
+    .eq('owned_by', user.id)
+    .single();
+
+  if (companyError || !company) {
+    // Nanti ini bisa di-redirect ke halaman untuk membuat profil perusahaan
+    throw new Error('Company profile not found for this user.');
+  }
+
   const title = formData.get('title') as string;
-  const company_name = formData.get('company_name') as string;
+  const company_name = company.name as string;
   const location = formData.get('location') as string;
   const description = formData.get('description') as string;
   const job_type = formData.get('job_type') as string;
@@ -30,7 +39,7 @@ export async function postJobAction(formData: FormData) {
     location,
     job_type,
     salary,
-    user_id: user.id,
+    company_id: company.id,
   });
 
   if (error) {

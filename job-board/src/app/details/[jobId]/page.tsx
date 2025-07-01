@@ -1,10 +1,8 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
-import { Database } from '@/types/supabase';
 
 export default async function ApplyPage({ params }: { params: { jobId: number } }) {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
 
   const {
     data: { user },

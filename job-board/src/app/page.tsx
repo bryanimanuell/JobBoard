@@ -1,17 +1,14 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { Database } from '@/types/supabase';
+import { createClient } from '@/lib/supabase/server'
 import JobCard from '@/components/jobCard'; 
 
 export const dynamic = 'force-dynamic'; 
 
 export default async function Home() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = await createClient();
 
   const { data: jobs, error } = await supabase
-    .from('jobs')
-    .select('*')
-    .order('created_at', { ascending: false });
+  .from('jobs').select('*')
+  .order('created_at', { ascending: false });
 
   if (error) {
     console.error('Error fetching jobs:', error);
