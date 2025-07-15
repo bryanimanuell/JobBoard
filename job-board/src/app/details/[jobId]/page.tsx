@@ -1,7 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
+import { Database } from '@/types/supabase';
 
-export default async function ApplyPage({ params }: { params: { jobId: number } }) {
+type Profile = Pick<Database['public']['Tables']['profiles']['Row'], 'role'>;
+
+export default async function ApplyPage({ params, profile }: { params: { jobId: number }; profile: Profile | null; }) {
   const supabase = await createClient();
 
   const {
@@ -47,9 +50,10 @@ export default async function ApplyPage({ params }: { params: { jobId: number } 
       <div className="mt-8">
         {/* Nanti di sini kita bisa taruh form aplikasi (upload CV, dll) */}
         {/* atau langsung tombol konfirmasi apply */}
-        <button className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-          Confirm Application
-        </button>
+        { profile?.role !== 'Company' && (
+          <button className="w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+            Apply Job
+          </button>)}
       </div>
     </div>
   );

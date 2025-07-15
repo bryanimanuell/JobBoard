@@ -17,6 +17,11 @@ export default async function Home() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const { 
+    data: profile 
+  } = user ? await supabase.from('profiles').select('role')
+  .eq('id', user.id).single() : { data: null };
+
   return (
     <main className="max-w-4xl mx-auto p-8">
       <h1 className="text-3xl font-bold text-center mb-8 text-white">
@@ -30,7 +35,7 @@ export default async function Home() {
           </p>
         ) : (
           jobs.map((job) => (
-            <JobCard key={job.id} job={job} user={user} />
+            <JobCard key={job.id} job={job} user={user} profile={profile}/>
           ))
         )}
       </div>

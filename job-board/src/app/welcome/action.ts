@@ -16,7 +16,6 @@ export async function completeProfile(formData: FormData) {
 
   const fullName = formData.get('fullName') as string;
   const role = formData.get('role') as string;
-  console.log("WOI : ",fullName, role, user.id);
   if (!fullName || !role) {
     throw new Error('Full name and role are required.');
   }

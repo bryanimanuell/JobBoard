@@ -31,7 +31,7 @@ export default function LoginPage() {
           supabaseClient={supabase}
           appearance={{ theme: ThemeSupa }}
           theme="dark"
-          providers={['google', 'apple']}
+          providers={['google']}
           redirectTo={`${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`}
         />
       </div>
