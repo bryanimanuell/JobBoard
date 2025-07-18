@@ -16,7 +16,7 @@ export async function postJobAction(formData: FormData) {
 
   const { data: company, error: companyError } = await supabase
     .from('companies')
-    .select('id, name')
+    .select('id, name, is_verified')
     .eq('owned_by', user.id)
     .single();
 

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
-
+import { toast } from 'react-hot-toast';
 import { postJobAction } from './action';
 
 export default async function PostJobPage() {
@@ -15,13 +15,16 @@ export default async function PostJobPage() {
 
   const { data: company, error: companyError } = await supabase
     .from('companies')
-    .select('id, name')
+    .select('id, name, is_verified')
     .eq('owned_by', user.id)
     .single();
 
   if (companyError || !company) {
-    // Nanti ini bisa di-redirect ke halaman untuk membuat profil perusahaan
-    throw new Error('Company profile not found for this user.');
+    redirect('/company/create');
+  }
+
+  if (!company.is_verified) {
+    redirect('/?error=unverified_company');
   }
 
   return (

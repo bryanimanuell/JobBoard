@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Link from 'next/link';
+import { Suspense } from 'react'; 
+import NotificationHandler from '@/components/notificationHandler';
+import { Toaster } from 'react-hot-toast';
 
 import DynamicNav from '@/components/dynamicNav';
 import { createClient } from '@/lib/supabase/server';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -32,13 +35,20 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-            <Link href="/">Home</Link>
-            <DynamicNav user={user} profile={profile} />
-          </div>
-        </nav>
-        {children}
+        <Toaster position="top-center" reverseOrder={false} />
+        <header className="sticky top-0 z-50 w-full border-b border-gray-700 bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-gray-900/60">
+            <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+                <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+                    <DynamicNav user={user} profile={profile} />
+                </div>
+            </nav>
+        </header>
+        <main>
+            {children}
+        </main>
+        <Suspense>
+          <NotificationHandler />
+        </Suspense>
       </body>
     </html>
   );

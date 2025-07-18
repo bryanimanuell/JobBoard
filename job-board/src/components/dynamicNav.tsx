@@ -11,8 +11,9 @@ export default function DynamicNav({ user, profile }: { user: User | null; profi
   console.log(profile);
   return (
     <>
-      { profile?.role === "Company" ? (
-        <div className="flex items-center gap-4">
+      <Link href="/">Home</Link>
+      { profile?.role === "Company" && (
+        <>
           <Link
             href="/post-job"
             className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
@@ -20,13 +21,13 @@ export default function DynamicNav({ user, profile }: { user: User | null; profi
             Post Job
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/profile"
             className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
           >
             Dashboard
           </Link>
-        </div>
-      ) : null}
+        </>
+      )}
       {user ? (
         <div className="flex items-center gap-4">
           <ProfileDropdown user={user} profile={profile} />

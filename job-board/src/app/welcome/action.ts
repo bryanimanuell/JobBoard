@@ -36,5 +36,10 @@ export async function completeProfile(formData: FormData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/');
+
+  if (role === 'Company'){
+    redirect('/company/create');
+  } else {
+    redirect('/');
+  }
 }
