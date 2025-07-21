@@ -57,12 +57,12 @@ export default function CompanyProfileForm({ company }: { company: Company }) {
             name="company_fields"
             defaultValue={company.company_fields || ''}
             placeholder="e.g., IT, Finance, Marketing"
-            className='mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white'
+            className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white"
           />
         </div>
         <div className="space-y-2">
           <label htmlFor="total_employees">Number of Employees</label>
-          <select name="total_employees" defaultValue={company.total_employees || ''} className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white">
+          <select name="total_employees" defaultValue={company.total_employees || ''} className="mt-1 pb-3 block w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white">
             <option value="1-50">1 - 50</option>
             <option value="51-100">51 - 100</option>
             <option value="101-500">101 - 500</option>

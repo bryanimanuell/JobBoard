@@ -1,4 +1,4 @@
-export default function RootLayout({
+export default function ApplyLayout({
   children,
 }: {
   children: React.ReactNode
