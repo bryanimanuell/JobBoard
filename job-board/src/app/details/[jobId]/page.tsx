@@ -2,13 +2,12 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import { FaGlobe, FaLocationDot, FaUsers } from 'react-icons/fa6'; 
 
-export default async function DetailPage({
-  params,
-}: {
-  params: { jobId: string };
-}) {
+type Params = Promise<{ jobId: string}>
+
+export default async function DetailPage({ params }: { params: Params }) {
   const supabase = await createClient();
-  const jobId = params?.jobId;
+  const awaited = await params;
+  const jobId = awaited.jobId;
 
   const {
     data: { user },

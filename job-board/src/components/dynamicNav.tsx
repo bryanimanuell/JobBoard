@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
-import { Database } from '@/types/supabase';
+import { Database } from '@/types/database';
 import ProfileDropdown from './profileDropdown';
 
 type Profile = Database['public']['Tables']['profiles']['Row'] | null;

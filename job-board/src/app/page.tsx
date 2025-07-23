@@ -2,15 +2,13 @@ import { createClient } from '@/lib/supabase/server'
 import JobCard from '@/components/jobCard'; 
 import SearchInput from '@/components/searchInput';
 
-export const dynamic = 'force-dynamic'; 
+export const dynamic = 'force-dynamic';
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>; 
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams?: { q?: string };
-}) {
-  const supabase = await createClient();
-  const searchQuery = searchParams?.q || '';
+export default async function Home(props: { searchParams: SearchParams }) {
+  const supabase = await createClient(); 
+  const searchParams = await props.searchParams;
+  const searchQuery = searchParams.query;
 
   let query = supabase.from('jobs').select('*');
 
