@@ -38,7 +38,7 @@ export async function updateCompanyProfile(
     return { success: false, message: `Error: ${error.message}` };
   }
 
-  revalidatePath('/dashboard/profile'); // Revalidasi halaman ini
-  revalidatePath('/', 'layout'); // Revalidasi layout utama (jika nama company tampil di sana)
+  revalidatePath('/dashboard/profile');
+  revalidatePath('/', 'layout');
   return { success: true, message: 'Profile updated successfully!' };
 }

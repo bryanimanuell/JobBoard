@@ -8,7 +8,6 @@ import {
   updateUserPassword,
   uploadNewCv,
   deleteCv,
-  switchEdit,
 } from './actions';
 import { SubmitButton } from '@/components/submitButton'; 
 import { FaLinkedin, FaGithub } from 'react-icons/fa'; 
@@ -19,14 +18,12 @@ import toast from 'react-hot-toast';
 type Profile = Database['public']['Tables']['profiles']['Row'];
 type UserCv = Database['public']['Tables']['user_cvs']['Row'];
 
-
 const initialState = {
   message: '',
   success: false,
 };
 
 export default function ProfileClientComponent({
-  user,
   profile,
   savedCvs,
 }: {

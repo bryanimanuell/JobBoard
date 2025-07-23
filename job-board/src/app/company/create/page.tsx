@@ -1,4 +1,4 @@
-'use client'; // Gunakan 'use client' karena kita pakai useActionState
+'use client';
 
 import { useActionState } from 'react';
 import { createCompanyProfile } from './action';
@@ -16,7 +16,7 @@ export default function CreateCompanyPage() {
     <div className="max-w-2xl mx-auto p-8 my-10 bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-2 text-white">Company Details</h1>
       <p className="text-gray-400 mb-6">
-        Please provide your company's information to get started.
+        Please provide your company&apos;s information to get started.
       </p>
 
       <form action={formAction} className="space-y-4">

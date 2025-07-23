@@ -19,10 +19,6 @@ export default async function ProfilePage() {
     .eq('id', user.id)
     .single();
 
-  // if (!profile || profile.role !== 'Personal') {
-  //   redirect('/');
-  // }
-
   const { data: cvs } = await supabase
     .from('user_cvs')
     .select('*')

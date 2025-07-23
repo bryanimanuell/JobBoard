@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
-import { toast } from 'react-hot-toast';
 import { postJobAction } from './action';
 
 export default async function PostJobPage() {
@@ -30,8 +29,6 @@ export default async function PostJobPage() {
   return (
     <div className="max-w-2xl mx-auto p-8 my-10 bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-white">Post a New Job</h1>
-
-      {/* Langkah 2: Gunakan action yang sudah di-import */}
       <form action={postJobAction} className="space-y-6">
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-300">Job Title</label>

@@ -1,6 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/appSidebar"
-import { createClient } from "@/lib/supabase/server"; 
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (

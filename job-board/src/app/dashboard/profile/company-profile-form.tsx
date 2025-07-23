@@ -5,10 +5,6 @@ import { useActionState } from 'react';
 import { updateCompanyProfile } from './action';
 import type { Database } from '@/types/supabase';
 import toast from 'react-hot-toast';
-
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { SubmitButton } from '@/components/submitButton';
 
 type Company = Database['public']['Tables']['companies']['Row'];

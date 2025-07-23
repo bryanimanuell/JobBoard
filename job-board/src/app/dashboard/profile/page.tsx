@@ -28,7 +28,7 @@ export default async function CompanyProfilePage() {
       <header>
         <h1 className="text-2xl font-bold text-white">Company Profile</h1>
         <p className="text-gray-400">
-          Update your company's information here.
+          Update your company&apos;s information here.
         </p>
       </header>
       <div className="p-8 my-10 bg-gray-800 rounded-lg shadow-md">
