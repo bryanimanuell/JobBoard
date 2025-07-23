@@ -43,6 +43,8 @@ export default async function DetailsPage({ params }: {params: { jobId: string }
     return <div>Job not found.</div>;
   }
 
+  const search = `${job.address}, ${job.city}`
+
   return (
     <div className="max-w-2xl mx-auto p-8 my-10 bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-2 text-white">Job Details</h1>
@@ -68,7 +70,7 @@ export default async function DetailsPage({ params }: {params: { jobId: string }
           )}
           <div>
             <FaLocationDot className="text-sm text-gray-400 mt-1 absolute"/>
-            <a className="text-sm text-gray-400 ms-5 hover:text-white" href={`https://www.google.com/maps/search/${job.location}`}>{job.location}</a>
+            <a className="text-sm text-gray-400 ms-5 hover:text-white" href={`https://www.google.com/maps/search/${search}`}>{search}</a>
           </div>
         </div>
         <FaUsers size={17} className="text-sm text-gray-400 mt-4 absolute"/>

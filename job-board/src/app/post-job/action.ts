@@ -27,7 +27,7 @@ export async function postJobAction(formData: FormData) {
 
   const title = formData.get('title') as string;
   const company_name = company.name as string;
-  const location = formData.get('location') as string;
+  const address = formData.get('address') as string;
   const description = formData.get('description') as string;
   const job_type = formData.get('job_type') as string;
   const salary = Number(formData.get('salary'));
@@ -36,7 +36,7 @@ export async function postJobAction(formData: FormData) {
     title,
     description,
     company_name,
-    location,
+    address,
     job_type,
     salary,
     company_id: company.id,

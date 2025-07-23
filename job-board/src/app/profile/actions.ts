@@ -64,8 +64,7 @@ export async function deleteCv(formData: FormData) {
 
   const cvPath = formData.get('cvPath') as string;
   if (!cvPath) throw new Error('CV path not found.');
- 
-  console.log("path : ",cvPath);
+  
   const { data, error } = await supabase.storage.from('cv-uploads').remove([cvPath]);
   if (error) {
     console.error("Storage Error:", error.message); 

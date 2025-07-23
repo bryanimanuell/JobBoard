@@ -23,7 +23,7 @@ export default function JobCard({ job, user, profile}: { job: Job; user: User | 
     <div onClick={() => router.push(link)} className="cursor-pointer bg-gray-800 border border-gray-700 rounded-lg p-6 shadow-md hover:border-indigo-500 transition-all duration-200">
       <h2 className="text-xl font-bold text-white">{job.title}</h2>
       <p className="text-md text-gray-300 mt-1">{job.company_name}</p>
-      <p className="text-sm text-gray-400 mt-2">📍 {job.location}</p>
+      <p className="text-sm text-gray-400 mt-2">📍 {job.address}</p>
 
       <div className="flex flex-wrap gap-2 mt-4">
         <span className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">

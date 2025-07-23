@@ -42,8 +42,12 @@ export default async function PostJobPage() {
           <input value={company.name} disabled type="text" name="company_name" id="company_name" className="mt-1 text-muted block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
         </div>
         <div>
-          <label htmlFor="location" className="block text-sm font-medium text-gray-300">Location</label>
-          <input type="text" name="location" id="location" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-300">City</label>
+          <input type="text" name="city" id="city" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+        </div>
+        <div>
+          <label htmlFor="address" className="block text-sm font-medium text-gray-300">Address</label>
+          <input type="text" name="address" id="address" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
         </div>
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-300">Job Description</label>

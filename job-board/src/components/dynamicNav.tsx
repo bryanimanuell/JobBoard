@@ -7,8 +7,7 @@ import ProfileDropdown from './profileDropdown';
 
 type Profile = Database['public']['Tables']['profiles']['Row'] | null;
 
-export default function DynamicNav({ user, profile }: { user: User | null; profile: Profile}) {
-  console.log(profile);
+export default function DynamicNav({ user, profile }: { user: User | null; profile: Profile}) { 
   return (
     <>
       <Link href="/">Home</Link>
