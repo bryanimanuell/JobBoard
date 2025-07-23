@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import type { User } from '@supabase/supabase-js';
-import { Database } from '@/types/supabase';
+import { Database } from '@/types/database';
 import LogoutButton from './logoutButton';
 import { FaUserCircle } from 'react-icons/fa';
 

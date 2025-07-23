@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useActionState } from 'react';
 import { updateCompanyProfile } from './action';
-import type { Database } from '@/types/supabase';
+import type { Database } from '@/types/database';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/components/submitButton';
 

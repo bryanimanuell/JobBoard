@@ -4,10 +4,10 @@ import SearchInput from '@/components/searchInput';
 
 export const dynamic = 'force-dynamic'; 
 
-export default async function Home({ 
-  searchParams, 
-} : { 
-  searchParams: { q?: string }; 
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: { q?: string };
 }) {
   const supabase = await createClient();
   const searchQuery = searchParams?.q || '';

@@ -1,7 +1,7 @@
 'use client';
 
 import type { User } from '@supabase/supabase-js';
-import { Database } from '@/types/supabase';
+import { Database } from '@/types/database';
 import { useActionState, useState, useEffect } from 'react';
 import {
   updateBasicProfile,
