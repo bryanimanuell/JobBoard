@@ -2,8 +2,15 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import { FaGlobe, FaLocationDot, FaUsers } from 'react-icons/fa6'; 
 
-export default async function DetailsPage({ params }: {params: { jobId: string }; }) {
+type DetailPageProps = {
+  params: {
+    jobId: string;
+  }; 
+};
+
+export default async function DetailsPage({ params }: DetailPageProps) {
   const supabase = await createClient();
+  const { jobId } = params; 
 
   const {
     data: { user },
@@ -26,7 +33,7 @@ export default async function DetailsPage({ params }: {params: { jobId: string }
   const { data: job, error } = await supabase
     .from('jobs')
     .select('*')
-    .eq('id', params.jobId)
+    .eq('id', jobId)
     .single(); 
 
   const { data: company } = await supabase
