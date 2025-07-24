@@ -3,13 +3,11 @@ import { redirect } from 'next/navigation';
 import ApplyForm from './applyForm';
 import Link from 'next/link';
 
-export default async function ApplyPage({
-  params,
-}: {
-  params: { jobId: string };
-}) {
+type Params = Promise<{ jobId: string}>
+
+export default async function ApplyPage({ params }: { params: Params }) {
   const supabase = await createClient();
-  const { jobId } = params;
+  const { jobId } = await params;
 
   const {
     data: { user },
