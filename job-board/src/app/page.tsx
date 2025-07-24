@@ -8,7 +8,7 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 export default async function Home(props: { searchParams: SearchParams }) {
   const supabase = await createClient(); 
   const searchParams = await props.searchParams;
-  const searchQuery = searchParams.query;
+  const searchQuery = searchParams.q as string | undefined;
 
   let query = supabase.from('jobs').select('*');
 
