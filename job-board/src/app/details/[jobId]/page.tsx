@@ -39,12 +39,23 @@ export default async function DetailPage({ params }: { params: Params }) {
     .eq('id', job.company_id)
     .single();  
 
+  const { data: existingApplication, error: checkError } = await supabase
+    .from('applications')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('job_id', jobId)
+    .maybeSingle();  
+
   if (!company) {
     return <div>Company not found.</div>;
   } 
 
   if (error || !job) {
     return <div>Job not found.</div>;
+  }
+ 
+  if (checkError) {
+    return <div>Error checking your application status. Please try again.</div>;
   }
 
   const search = `${job.address}, ${job.city}`
@@ -83,13 +94,20 @@ export default async function DetailPage({ params }: { params: Params }) {
           defaultValue={company.company_description || ''} 
           rows={5} />
       </div>
-
-      <div className="mt-8">
-        { profile?.role !== 'Company' && (
-          <button className="w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-            Apply Job
-          </button>)}
-      </div>
+      {existingApplication ? (
+        <div className="mt-8">
+          <div className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600">
+            You have already applied for this job.
+          </div>
+        </div>
+      ) : (
+        <div className="mt-8">
+          { profile?.role !== 'Company' && (
+            <button className="w-full cursor-pointer flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
+              Apply Job
+            </button>)}
+        </div>
+      )}
     </div>
   );
 }

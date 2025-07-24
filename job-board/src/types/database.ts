@@ -22,6 +22,9 @@ export type Database = {
           status: string | null
           submitted_cv_path: string
           user_id: string
+          relatives: string | null
+          years_of_experience: number | null
+          cover_letter: string | null
         }
         Insert: {
           applied_at?: string | null
@@ -31,6 +34,9 @@ export type Database = {
           status?: string | null
           submitted_cv_path: string
           user_id: string
+          relatives?: string | null
+          years_of_experience?: number | null
+          cover_letter?: string | null
         }
         Update: {
           applied_at?: string | null
@@ -40,6 +46,9 @@ export type Database = {
           status?: string | null
           submitted_cv_path?: string
           user_id?: string
+          relatives?: string | null
+          years_of_experience?: number | null
+          cover_letter?: string | null
         }
         Relationships: [
           {
