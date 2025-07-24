@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useActionState } from 'react';
-import type { User } from '@supabase/supabase-js';
 import type { Database } from '@/types/database';
 import toast from 'react-hot-toast';
 
