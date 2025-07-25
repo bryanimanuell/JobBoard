@@ -1,9 +1,6 @@
-# JobBoard
-
-🌐 Website URL : 
 # A modern, full-stack job board application built with Next.js and Supabase, featuring role-based access for companies and job seekers, a comprehensive company dashboard, and advanced search functionality.
 
-**Live Demo:** [https://Job Board App](https://job-board-brown-delta.vercel.app/)
+**Live Demo:** [Job Board App](https://job-board-brown-delta.vercel.app/)
 
 ---
 
