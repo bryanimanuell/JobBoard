@@ -7,7 +7,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SidebarProvider>
         <AppSidebar />
         <div className="w-full flex justify-center">
-            <SidebarTrigger />
+            {/* <SidebarTrigger /> */}
             {children}
         </div>
         </SidebarProvider>

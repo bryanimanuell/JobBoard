@@ -10,7 +10,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarFooter
+  SidebarFooter,
+  SidebarTrigger
 } from "@/components/ui/sidebar"
 
 const items = [
@@ -53,6 +54,7 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarTrigger className="absolute left-65 text-white" />
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>

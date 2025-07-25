@@ -10,7 +10,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
   const searchParams = await props.searchParams;
   const searchQuery = searchParams.q as string | undefined;
 
-  let query = supabase.from('jobs').select('*');
+  let query = supabase.from('jobs').select('*').eq('status','ACTIVE');
 
   if(searchQuery) {
     const searchPattern = `%${searchQuery}%`;

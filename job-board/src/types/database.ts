@@ -112,6 +112,7 @@ export type Database = {
           job_type: string | null
           salary: number | null
           title: string | null
+          status: string | null
         }
         Insert: {
           address?: string | null
@@ -124,6 +125,7 @@ export type Database = {
           job_type?: string | null
           salary?: number | null
           title?: string | null
+          status?: string | null
         }
         Update: {
           address?: string | null
@@ -136,6 +138,7 @@ export type Database = {
           job_type?: string | null
           salary?: number | null
           title?: string | null
+          status?: string | null
         }
         Relationships: [
           {
