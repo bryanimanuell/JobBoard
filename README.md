@@ -71,4 +71,4 @@ This section highlights key technical implementations that add significant value
 
 **Bryan Imanuell** - [LinkedIn](https://www.linkedin.com/in/bryanimanuell/) - bryanimanuell17@gmail.com
 
-Project Link: [](https://github.com/your-username/your-repo-name)
+Project Link: [GitHub](https://github.com/bryanimanuell/JobBoard)
