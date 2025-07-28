@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/appSidebar"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -7,7 +7,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SidebarProvider>
         <AppSidebar />
         <div className="w-full flex justify-center">
-            {/* <SidebarTrigger /> */}
             {children}
         </div>
         </SidebarProvider>

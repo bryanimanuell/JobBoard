@@ -40,7 +40,7 @@ export default async function DashboardJobsPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Manage Jobs</h1>
           <p className="text-gray-400">
-            Here are all the jobs you've posted for your company.
+            Here are all the jobs you&apos;ve posted for your company.
           </p>
         </div>
         <Link href="/post-job" className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm">
@@ -77,7 +77,7 @@ export default async function DashboardJobsPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={4} className="text-center text-gray-400">
-                  You haven't posted any jobs yet.
+                  You haven&apos;t posted any jobs yet.
                 </TableCell>
               </TableRow>
             )}
