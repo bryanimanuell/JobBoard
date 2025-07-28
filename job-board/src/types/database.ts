@@ -209,7 +209,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_applications_for_company: {
+        Args: { company_uuid: string }
+        Returns: {
+          id: string
+          status: string
+          applied_at: string
+          job_title: string
+          applicant_name: string
+          applicant_email: string
+          applicant_phone: string
+          applicant_linkedin: string
+          applicant_github: string
+          relatives: string
+          years_of_experience: number
+          cover_letter: string
+          submitted_cv_path: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

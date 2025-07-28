@@ -50,13 +50,13 @@ export function JobActions({ job }: { job: Job }) {
             </form>
           </DropdownMenuItem>
         )}
-        
+        {job.status !== 'ARCHIEVED' && (
         <DropdownMenuItem asChild className="text-red-500 focus:bg-red-500/10 focus:text-red-500">
            <form action={archieveJob}>
               <input type="hidden" name="jobId" value={job.id} />
               <button type="submit" className="w-full text-left">Archieve Job</button>
             </form>
-        </DropdownMenuItem>
+        </DropdownMenuItem> )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -12,9 +12,19 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { JobActions } from './jobAction'; 
+import { JobFilters } from './jobFilters';
 
-export default async function DashboardJobsPage() {
+type DashboardJobsPageProps = {
+  searchParams: Promise<{
+    status?: string;
+    job_type?: string;
+    sort?: string;
+  }>;
+};
+
+export default async function DashboardJobsPage(props: DashboardJobsPageProps) {
   const supabase = await createClient();
+  const searchParams = await props.searchParams;
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect('/login');
 
@@ -28,11 +38,27 @@ export default async function DashboardJobsPage() {
     return <p>Company profile not found.</p>;
   }
 
-  const { data: jobs } = await supabase
+  let query = supabase
     .from('jobs')
     .select('*')
-    .eq('company_id', company.id)
-    .order('created_at', { ascending: false });
+    .eq('company_id', company.id);
+
+  if (searchParams?.status && searchParams.status !== 'all') {
+    query = query.eq('status', searchParams.status);
+  }
+
+  if (searchParams?.job_type && searchParams.job_type !== 'all') {
+    query = query.eq('job_type', searchParams.job_type);
+  }
+
+  const sortOrder = searchParams?.sort === 'oldest' ? 'asc' : 'desc';
+  query = query.order('created_at', { ascending: sortOrder === 'asc' });
+
+  const { data: jobs, error } = await query;
+
+  if (error) {
+    console.error('Error fetching jobs:', error);
+  }
 
   return (
     <div className="w-full mx-auto p-4 sm:p-8 space-y-4">
@@ -47,7 +73,9 @@ export default async function DashboardJobsPage() {
           + Post New Job
         </Link>
       </div>
-      
+      <div className="flex justify-start">
+        <JobFilters />
+      </div>
       <div className="border border-gray-700 rounded-lg">
         <Table>
           <TableHeader>

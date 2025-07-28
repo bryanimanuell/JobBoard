@@ -7,7 +7,7 @@ export async function archieveJob(formData: FormData) {
   const jobId = formData.get('jobId') as string;
   const supabase = await createClient();
    
-  const { error } = await supabase.from('jobs').update({status: 'ARCHIEVE'}).eq('id', jobId);
+  const { error } = await supabase.from('jobs').update({status: 'ARCHIEVED'}).eq('id', jobId);
 
   if (error) {
     console.error('Delete Job Error:', error); 
