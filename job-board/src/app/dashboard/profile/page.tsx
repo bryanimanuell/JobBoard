@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
-import CompanyProfileForm from './company-profile-form'; // Komponen form kita
+import CompanyProfileForm from './company-profile-form';
 
 export default async function CompanyProfilePage() {
   const supabase = await createClient();
@@ -20,7 +20,7 @@ export default async function CompanyProfilePage() {
     .single();
 
   if (error || !companyProfile) {
-    redirect('/company/create');
+    redirect('/company/create?error=company_not_found');
   }
 
   return (

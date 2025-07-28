@@ -11,7 +11,7 @@ export async function postJobAction(formData: FormData) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error('User is not authenticated.');
+    redirect('/?error=unauthenticated');
   }
 
   const { data: company, error: companyError } = await supabase
@@ -21,8 +21,7 @@ export async function postJobAction(formData: FormData) {
     .single();
 
   if (companyError || !company) {
-    // Nanti ini bisa di-redirect ke halaman untuk membuat profil perusahaan
-    throw new Error('Company profile not found for this user.');
+    redirect('/company/create?error=company_not_found');
   }
 
   const title = formData.get('title') as string;
@@ -43,8 +42,7 @@ export async function postJobAction(formData: FormData) {
   });
 
   if (error) {
-    console.error('Error inserting job:', error);
-    throw new Error(error.message);
+    redirect('/post-job?error=post_job_error&message='+error.message);
   }
 
   revalidatePath('/');

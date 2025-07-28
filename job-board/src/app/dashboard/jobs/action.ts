@@ -20,8 +20,6 @@ export async function updateJobStatus(formData: FormData) {
   const newStatus = formData.get('status') as string;
   const supabase = await createClient();
 
-  console.log("jobId: ",jobId, " | New status: ", newStatus);
-
   if (newStatus !== 'ACTIVE' && newStatus !== 'INACTIVE') {
     return;
   }
@@ -31,7 +29,6 @@ export async function updateJobStatus(formData: FormData) {
     .update({status: newStatus})
     .eq('id', jobId);
 
-  console.log('hasil', error)
   if (error) {
     console.error('Update Status Error:', error); 
   }

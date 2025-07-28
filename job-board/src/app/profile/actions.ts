@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 type FormState = {
   message: string;
@@ -60,7 +61,7 @@ export async function updateUserPassword(
 export async function deleteCv(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('User not authenticated');
+  if (!user) redirect('/?error=unauthenticated');
 
   const cvPath = formData.get('cvPath') as string;
   if (!cvPath) throw new Error('CV path not found.');

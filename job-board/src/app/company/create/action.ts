@@ -41,6 +41,5 @@ export async function createCompanyProfile(
   }
 
   revalidatePath('/', 'layout');
-  redirect('/');
-//   redirect('/dashboard');
+  redirect('/dashboard/profile');
 }
