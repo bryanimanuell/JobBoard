@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { ApplicationActions } from './applicationActions'; 
+import { ApplicationFilters } from './applicationFilters';
 
 type ApplicationWithDetails = {
   id: string;
@@ -28,8 +29,17 @@ type ApplicationWithDetails = {
   submitted_cv_path: string;
 };
 
-export default async function DashboardApplicantsPage() {
+type DashboardApplicationsPageProps = {
+  searchParams: Promise<{
+    status?: string;
+    job_title?: string;
+    sort?: string;
+  }>;
+};
+
+export default async function DashboardApplicantsPage(props: DashboardApplicationsPageProps) {
     const supabase = await createClient();
+    const searchParams = await props.searchParams;
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) redirect('/login');
 
@@ -43,12 +53,19 @@ export default async function DashboardApplicantsPage() {
         return <p>Company profile not found.</p>;
     }
 
+    const { data: jobsForFilter } = await supabase
+      .from('jobs')
+      .select('id, title')
+      .eq('company_id', company.id);
+
     const { data: applications, error } = await supabase
         .rpc('get_applications_for_company', {
         company_uuid: company.id,
+        filter_status: searchParams.status === 'all' ? null : searchParams.status,
+        filter_job_title: searchParams.job_title === 'all' ? null : searchParams.job_title,
         })
         .select('*')
-        .order('applied_at', { ascending: false });
+        .order('applied_at', { ascending: searchParams.sort === 'oldest' });
 
     if (error) {
         console.error("Error fetching applications:", error);
@@ -63,7 +80,9 @@ export default async function DashboardApplicantsPage() {
             Review and manage applications for your job postings.
             </p>
         </header>
-        
+        <div className="flex justify-start">
+            <ApplicationFilters jobs={jobsForFilter || []}/>
+        </div>
         <div className="border border-gray-700 rounded-lg">
             <Table>
             <TableHeader>

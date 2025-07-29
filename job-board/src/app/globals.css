@@ -73,6 +73,12 @@ body {
   textarea::-webkit-scrollbar-track {
     -webkit-appearance: none;
   }
+
+  div::-webkit-scrollbar,
+  div::-webkit-scrollbar-corner,
+  div::-webkit-scrollbar-track {
+    -webkit-appearance: none;
+  }
 }
 
 .dark {

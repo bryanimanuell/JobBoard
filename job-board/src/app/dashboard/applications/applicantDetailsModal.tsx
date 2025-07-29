@@ -54,65 +54,65 @@ export function ApplicantDetailsModal({ isOpen, onClose, application }: ModalPro
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="sm:max-w-[625px] bg-gray-800 border-gray-700 text-white">
+        <DialogContent className="sm:max-w-[625px] bg-gray-800 border-gray-700 text-white flex flex-col max-h-[90vh]">
             <DialogHeader>
             <DialogTitle className="text-2xl">Applicant Details</DialogTitle>
             <DialogDescription>
                 {application.job_title || 'Job Title'}
             </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-            <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">{application.applicant_name}</h3>
-                <Badge variant={badgeVariant}>
-                    {application.status}
-                </Badge>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                <p className="text-gray-400">Email</p>
-                <p>{application.applicant_email}</p>
+            <div className="grid gap-4 py-4 overflow-y-auto">
+                <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">{application.applicant_name}</h3>
+                    <Badge variant={badgeVariant}>
+                        {application.status}
+                    </Badge>
                 </div>
-                <div>
-                <p className="text-gray-400">Phone</p>
-                <p>{application.applicant_phone || 'Not provided'}</p>
+                
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                    <p className="text-gray-400">Email</p>
+                    <p>{application.applicant_email}</p>
+                    </div>
+                    <div>
+                    <p className="text-gray-400">Phone</p>
+                    <p>{application.applicant_phone || 'Not provided'}</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-                {application.applicant_linkedin && (
-                <a href={application.applicant_linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-blue-400 hover:underline">
-                    <FaLinkedin /> LinkedIn
-                </a>
-                )}
-                {application.applicant_github && (
-                <a href={application.applicant_github} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:underline">
-                    <FaGithub /> GitHub
-                </a>
-                )}
-            </div>
-            
-            <div className="border-t border-gray-700 pt-4 space-y-4">
-                <div>
-                <p className="text-gray-400">Submitted CV</p>
-                <button onClick={handleViewCv} className="text-indigo-400 hover:underline">
-                    View CV
-                </button>
+                
+                <div className="flex items-center gap-4">
+                    {application.applicant_linkedin && (
+                    <a href={application.applicant_linkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-blue-400 hover:underline">
+                        <FaLinkedin /> LinkedIn
+                    </a>
+                    )}
+                    {application.applicant_github && (
+                    <a href={application.applicant_github} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:underline">
+                        <FaGithub /> GitHub
+                    </a>
+                    )}
                 </div>
-                <div>
-                <p className="text-gray-400">Years of Experience</p>
-                <p>{application.years_of_experience ?? 'Not provided'}</p>
+                
+                <div className="border-t border-gray-700 pt-4 space-y-4">
+                    <div>
+                        <p className="text-gray-400">Submitted CV</p>
+                        <button onClick={handleViewCv} className="text-indigo-400 hover:underline">
+                            View CV
+                        </button>
+                    </div>
+                    <div>
+                        <p className="text-gray-400">Years of Experience</p>
+                        <p>{application.years_of_experience ?? 'Not provided'}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-400">Relatives at Company</p>
+                        <p>{application.relatives || 'None'}</p>
+                    </div>
+                    <div>
+                        <p className="text-gray-400">Cover Letter</p>
+                        <p className="whitespace-pre-wrap bg-gray-900 p-3 rounded-md">{application.cover_letter || 'Not provided'}</p>
+                    </div>
                 </div>
-                <div>
-                <p className="text-gray-400">Relatives at Company</p>
-                <p>{application.relatives || 'None'}</p>
-                </div>
-                <div>
-                <p className="text-gray-400">Cover Letter</p>
-                <p className="whitespace-pre-wrap bg-gray-900 p-3 rounded-md">{application.cover_letter || 'Not provided'}</p>
-                </div>
-            </div>
             </div>
         </DialogContent>
         </Dialog>
