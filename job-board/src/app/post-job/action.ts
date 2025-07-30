@@ -1,50 +1,45 @@
 'use server';
 
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
 export async function postJobAction(formData: FormData) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect('/login');
 
-  if (!user) {
-    redirect('/?error=unauthenticated');
-  }
-
-  const { data: company, error: companyError } = await supabase
+  const { data: company } = await supabase
     .from('companies')
-    .select('id, name, is_verified')
+    .select('id')
     .eq('owned_by', user.id)
     .single();
 
-  if (companyError || !company) {
-    redirect('/company/create?error=company_not_found');
+  if (!company) {
+    throw new Error('Company not found.');
   }
 
-  const title = formData.get('title') as string;
-  const company_name = company.name as string;
-  const address = formData.get('address') as string;
-  const description = formData.get('description') as string;
-  const job_type = formData.get('job_type') as string;
-  const salary = Number(formData.get('salary'));
-
-  const { error } = await supabase.from('jobs').insert({
-    title,
-    description,
-    company_name,
-    address,
-    job_type,
-    salary,
+  const jobData = {
     company_id: company.id,
-  });
+    company_name: formData.get('company_name') as string,
+    title: formData.get('title') as string,
+    job_type: formData.get('job_type') as string,
+    experience_level: formData.get('experience_level') as string,
+    address: formData.get('address') as string,
+    city: formData.get('city') as string,
+    salary: Number(formData.get('salary')) || null,
+    responsibilities: formData.get('responsibilities') as string,
+    qualifications: formData.get('qualifications') as string,
+  };
+
+  const { error } = await supabase.from('jobs').insert(jobData);
 
   if (error) {
-    redirect('/post-job?error=post_job_error&message='+error.message);
+    console.error('Error inserting job:', error);
+    throw new Error(error.message);
   }
 
   revalidatePath('/');
-  redirect('/');
+  revalidatePath('/dashboard/jobs');
+  redirect('/dashboard/jobs');
 }

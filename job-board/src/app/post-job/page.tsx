@@ -1,6 +1,11 @@
-import { createClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { postJobAction } from './action';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { SubmitButton } from '@/components/submitButton';
 
 export default async function PostJobPage() {
   const supabase = await createClient();
@@ -12,13 +17,13 @@ export default async function PostJobPage() {
     redirect('/login');
   }
 
-  const { data: company, error: companyError } = await supabase
+  const { data: company } = await supabase
     .from('companies')
     .select('id, name, is_verified')
     .eq('owned_by', user.id)
     .single();
 
-  if (companyError || !company) {
+  if (!company) {
     redirect('/company/create');
   }
 
@@ -30,46 +35,82 @@ export default async function PostJobPage() {
     <div className="max-w-2xl mx-auto p-8 my-10 bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-white">Post a New Job</h1>
       <form action={postJobAction} className="space-y-6">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-300">Job Title</label>
-          <input type="text" name="title" id="title" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+        {/* Company Name (Read-only) */}
+        <div className="space-y-2">
+          <Label htmlFor="company_name">Company Name</Label>
+          <Input value={company.name} disabled type="text" id="company_name" name="company_name"/>
         </div>
-        <div>
-          <label htmlFor="company_name" className="block text-sm font-medium text-gray-300">Company Name</label>
-          <input value={company.name} disabled type="text" name="company_name" id="company_name" className="mt-1 text-muted block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+        
+        {/* Job Title */}
+        <div className="space-y-2">
+          <Label htmlFor="title">Job Title</Label>
+          <Input type="text" name="title" id="title" required />
         </div>
-        <div>
-          <label htmlFor="city" className="block text-sm font-medium text-gray-300">City</label>
-          <input type="text" name="city" id="city" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+        
+        {/* Job Type & Experience Level (Side-by-side) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="job_type">Job Type</Label>
+            <Select name="job_type" required>
+              <SelectTrigger className='w-full'><SelectValue placeholder="Select a type" /></SelectTrigger>
+              <SelectContent className='bg-black'>
+                <SelectItem className='focus:bg-gray-100/10' value="Full-time">Full-time</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="Part-time">Part-time</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="Freelance">Freelance</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="Internship">Internship</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="experience_level">Experience Level</Label>
+            <Select name="experience_level" required>
+              <SelectTrigger className='w-full'><SelectValue placeholder="Select a level" /></SelectTrigger>
+              <SelectContent className='bg-black'>
+                <SelectItem className='focus:bg-gray-100/10' value="Fresh Graduate">Fresh Graduate</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="1-3 Years">1-3 Years</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="3+ Years">3+ Years</SelectItem>
+                <SelectItem className='focus:bg-gray-100/10' value="5+ Years">5+ Years</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div>
-          <label htmlFor="address" className="block text-sm font-medium text-gray-300">Address</label>
-          <input type="text" name="address" id="address" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+        <div className="space-y-2">
+          <Label htmlFor="address">Address</Label>
+          <Input type="text" name="address" id="address" required placeholder="e.g., Jakarta, Indonesia"/>
         </div>
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-300">Job Description</label>
-          <textarea name="description" id="description" rows={4} required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        {/* Location & Salary */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="city">City</Label>
+            <Input type="text" name="city" id="city" required placeholder="e.g., Jakarta, Indonesia"/>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="salary">Salary (optional)</Label>
+            <Input type="number" name="salary" id="salary" placeholder="e.g., 10000000" />
+          </div>
         </div>
-        <div>
-          <label htmlFor="job_type" className="block text-sm font-medium text-gray-300">Job Type</label>
-          <select name="job_type" id="job_type" required className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500">
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Freelance</option>
-            <option>Internship</option>
-          </select>
+
+        {/* Responsibilities */}
+        <div className="space-y-2">
+            <Label htmlFor="responsibilities">Responsibilities</Label>
+            <Textarea name="responsibilities" id="responsibilities" rows={6} required />
+            <p className="text-xs text-gray-400">Write each point on a new line to create a bulleted list.</p>
         </div>
-        <div>
-          <label htmlFor="salary" className="block text-sm font-medium text-gray-300">Salary (optional)</label>
-          <input type="number" name="salary" id="salary" placeholder="e.g., 10000000" className="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm p-2 text-white focus:ring-indigo-500 focus:border-indigo-500"/>
+
+        {/* Qualifications */}
+        <div className="space-y-2">
+            <Label htmlFor="qualifications">Qualifications</Label>
+            <Textarea name="qualifications" id="qualifications" rows={6} required />
+            <p className="text-xs text-gray-400">Write each point on a new line to create a bulleted list.</p>
         </div>
-        <div>
-          <button 
-            type="submit" 
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        
+        <div className="pt-4">
+          <SubmitButton 
+            pendingText="Posting..." 
+            className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:bg-indigo-400"
           >
             Post Job
-          </button>
+          </SubmitButton>
         </div>
       </form>
     </div>

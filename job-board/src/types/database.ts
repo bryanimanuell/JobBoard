@@ -107,7 +107,9 @@ export type Database = {
           company_id: string | null
           company_name: string | null
           created_at: string
-          description: string | null
+          responsibilities: string | null
+          qualifications: string | null
+          experience_level: string | null
           id: string
           job_type: string | null
           salary: number | null
@@ -120,7 +122,9 @@ export type Database = {
           company_id?: string | null
           company_name?: string | null
           created_at?: string
-          description?: string | null
+          responsibilities?: string | null
+          qualifications?: string | null
+          experience_level?: string | null
           id?: string
           job_type?: string | null
           salary?: number | null
@@ -133,7 +137,9 @@ export type Database = {
           company_id?: string | null
           company_name?: string | null
           created_at?: string
-          description?: string | null
+          responsibilities?: string | null
+          qualifications?: string | null
+          experience_level?: string | null
           id?: string
           job_type?: string | null
           salary?: number | null

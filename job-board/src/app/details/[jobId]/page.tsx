@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import { FaGlobe, FaLocationDot, FaUsers } from 'react-icons/fa6'; 
+import { BulletPointDisplay } from '@/components/ui/bulletPointDisplay';
 
 type Params = Promise<{ jobId: string}>
 
@@ -68,10 +69,24 @@ export default async function DetailPage({ params }: { params: Params }) {
       </p>
 
       <div className="border border-gray-700 bg-gray-900 p-4 rounded-lg">
-        <h2 className="text-xl font-semibold text-white">{job.title}</h2>
-        <p className="text-gray-400 mb-4">{job.job_type}</p> 
-        <h2 className="text-l font-semibold text-white">Job Description</h2>
-        <p className="text-md text-gray-300">{job.description}</p>
+        <h1 className="text-xl font-semibold text-white">{job.title}</h1>
+        <p className="text-gray-300">{job.job_type}</p> 
+        <div className="mt-6 border-t border-gray-700 pt-6">
+          <h3 className="text-lg font-semibold text-white">Experience Level</h3>
+          <p className="text-gray-300">{job.experience_level || 'Not specified'}</p>
+        </div>
+        <div className="mt-6 border-t border-gray-700 pt-6 space-y-2">
+          <h3 className="text-lg font-semibold text-white">Responsibilities</h3>
+          <div className="text-gray-300">
+            <BulletPointDisplay text={job.responsibilities} />
+          </div>
+        </div>
+        <div className="mt-6 border-t border-gray-700 pt-6 space-y-2">
+          <h3 className="text-lg font-semibold text-white">Qualifications</h3>
+          <div className="text-gray-300">
+            <BulletPointDisplay text={job.qualifications} />
+          </div>
+        </div>
       </div>
       <div className="border border-gray-700 bg-gray-900 p-4 rounded-lg mt-5">
         <h2 className="text-xl font-semibold text-white mb-3">Company Description</h2>
