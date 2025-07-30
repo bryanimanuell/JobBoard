@@ -1,4 +1,6 @@
-import { createClient } from '@/lib/supabase/server';
+'use client'
+import { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
 import { redirect } from 'next/navigation';
 import { postJobAction } from './action';
 import { Label } from '@/components/ui/label';
@@ -6,39 +8,59 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { SubmitButton } from '@/components/submitButton';
+import { MultiSelect, OptionType } from '@/components/ui/multiSelect';
 
-export default async function PostJobPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+type Company = { id: string; name: string; is_verified: boolean | null; };
 
-  if (!user) {
-    redirect('/login');
-  }
+export default function PostJobPage() {
+  const [company, setCompany] = useState<Company | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const { data: company } = await supabase
-    .from('companies')
-    .select('id, name, is_verified')
-    .eq('owned_by', user.id)
-    .single();
+  const [experienceLevels, setExperienceLevels] = useState<string[]>([]);
+  const experienceOptions: OptionType[] = [
+    { value: 'Fresh Graduate', label: 'Fresh Graduate' },
+    { value: '1-3 Years', label: '1-3 Years' },
+    { value: '3+ Years', label: '3+ Years' },
+    { value: '5+ Years', label: '5+ Years' },
+  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        redirect('/login');
+      }
 
-  if (!company) {
-    redirect('/company/create');
-  }
+      const { data: company } = await supabase
+        .from('companies')
+        .select('id, name, is_verified')
+        .eq('owned_by', user.id)
+        .single();
+      
+      if (!company) {
+        redirect('/company/create');
+      }
+      if (!company.is_verified) {
+        redirect('/?error=unverified_company');
+      }
+      setCompany(company);
+      setLoading(false);
+    };
+    fetchData();
+  }, [redirect]);
 
-  if (!company.is_verified) {
-    redirect('/?error=unverified_company');
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="max-w-2xl mx-auto p-8 my-10 bg-gray-800 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6 text-white">Post a New Job</h1>
       <form action={postJobAction} className="space-y-6">
-        {/* Company Name (Read-only) */}
+        <input type="hidden" name="experience_level" value={experienceLevels.join(', ')} />
         <div className="space-y-2">
           <Label htmlFor="company_name">Company Name</Label>
-          <Input value={company.name} disabled type="text" id="company_name" name="company_name"/>
+          <Input value={company?.name} disabled type="text" id="company_name" name="company_name"/>
         </div>
         
         {/* Job Title */}
@@ -63,15 +85,12 @@ export default async function PostJobPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="experience_level">Experience Level</Label>
-            <Select name="experience_level" required>
-              <SelectTrigger className='w-full'><SelectValue placeholder="Select a level" /></SelectTrigger>
-              <SelectContent className='bg-black'>
-                <SelectItem className='focus:bg-gray-100/10' value="Fresh Graduate">Fresh Graduate</SelectItem>
-                <SelectItem className='focus:bg-gray-100/10' value="1-3 Years">1-3 Years</SelectItem>
-                <SelectItem className='focus:bg-gray-100/10' value="3+ Years">3+ Years</SelectItem>
-                <SelectItem className='focus:bg-gray-100/10' value="5+ Years">5+ Years</SelectItem>
-              </SelectContent>
-            </Select>
+            <MultiSelect
+              options={experienceOptions}
+              selected={experienceLevels}
+              onChange={setExperienceLevels}
+              maxSelections={2}
+            />
           </div>
         </div>
         <div className="space-y-2">

@@ -29,9 +29,14 @@ export default function JobCard({ job, user, profile}: { job: Job; user: User | 
         <span className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
           {job.job_type}
         </span>
-        <span className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
-          {job.experience_level}
-        </span>
+        {job.experience_level && job.experience_level.split(',').map((level, index) => (
+          <span 
+            key={index} 
+            className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+          >
+            {level.trim()}
+          </span>
+        ))}
       </div>
 
       <div className="w-full flex justify-center mt-4 pt-4 border-t border-gray-700">
