@@ -11,7 +11,7 @@ export async function postJobAction(formData: FormData) {
 
   const { data: company } = await supabase
     .from('companies')
-    .select('id')
+    .select('id, name')
     .eq('owned_by', user.id)
     .single();
 
@@ -21,7 +21,7 @@ export async function postJobAction(formData: FormData) {
 
   const jobData = {
     company_id: company.id,
-    company_name: formData.get('company_name') as string,
+    company_name: company.name,
     title: formData.get('title') as string,
     job_type: formData.get('job_type') as string,
     experience_level: formData.get('experience_level') as string,

@@ -16,7 +16,7 @@ export default function JobCard({ job, user, profile}: { job: Job; user: User | 
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(job.salary)
-  : 'Tidak ditampilkan';
+  : 'Not specified';
 
 
   return (
@@ -25,9 +25,12 @@ export default function JobCard({ job, user, profile}: { job: Job; user: User | 
       <p className="text-md text-gray-300 mt-1">{job.company_name}</p>
       <p className="text-sm text-gray-400 mt-2">📍 {job.address}</p>
 
-      <div className="flex flex-wrap gap-2 mt-4">
+      <div className="flex flex-wrap gap-1 mt-4">
         <span className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
           {job.job_type}
+        </span>
+        <span className="bg-gray-700 text-gray-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">
+          {job.experience_level}
         </span>
       </div>
 
