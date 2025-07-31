@@ -8,7 +8,8 @@
 
 ---
 
-![Project Showcase GIF](https://your-gif-url.com/showcase.gif) 
+**⚠️ For now, emails can only be sent to my personal email address because this project does not yet have a proper domain.**
+Thank you for your understanding.
 
 ---
 
