@@ -100,6 +100,38 @@ export type Database = {
         }
         Relationships: []
       }
+      email_templates: {
+        Row: {
+          body: string | null
+          company_id: string
+          id: string
+          status: string
+          subject: string | null
+        }
+        Insert: {
+          body?: string | null
+          company_id: string
+          id?: string
+          status: string
+          subject?: string | null
+        }
+        Update: {
+          body?: string | null
+          company_id?: string
+          id?: string
+          status?: string
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_templates_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jobs: {
         Row: {
           address: string | null
@@ -212,7 +244,25 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      application_details: {
+        Row: {
+          applicant_email: string | null
+          applicant_name: string | null
+          applied_at: string | null
+          company_id: string | null
+          company_name: string | null
+          company_owner_id: string | null
+          cover_letter: string | null
+          id: string | null
+          job_title: string | null
+          relatives: string | null
+          status: string | null
+          submitted_cv_path: string | null
+          user_id: string | null
+          years_of_experience: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_applications_for_company: {

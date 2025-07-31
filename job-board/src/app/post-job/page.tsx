@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { postJobAction } from './action';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -15,6 +15,7 @@ type Company = { id: string; name: string; is_verified: boolean | null; };
 export default function PostJobPage() {
   const [company, setCompany] = useState<Company | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const [experienceLevels, setExperienceLevels] = useState<string[]>([]);
   const experienceOptions: OptionType[] = [
@@ -28,7 +29,8 @@ export default function PostJobPage() {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        redirect('/login');
+        router.push('/login');
+        return;
       }
 
       const { data: company } = await supabase
@@ -38,16 +40,18 @@ export default function PostJobPage() {
         .single();
       
       if (!company) {
-        redirect('/company/create');
+        router.push('/company/create');
+        return;
       }
       if (!company.is_verified) {
-        redirect('/?error=unverified_company');
+        router.push('/?error=unverified_company');
+        return;
       }
       setCompany(company);
       setLoading(false);
     };
     fetchData();
-  }, [redirect]);
+  }, [router]);
 
   if (loading) {
     return <div>Loading...</div>;
