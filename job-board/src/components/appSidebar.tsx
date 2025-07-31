@@ -1,4 +1,4 @@
-import { Building, BriefcaseBusiness, Mails } from "lucide-react"
+import { Building, BriefcaseBusiness, Mails, Mail } from "lucide-react"
 import Link from 'next/link';
 import {
   Sidebar,
@@ -30,6 +30,11 @@ const items = [
     url: "/dashboard/applications",
     icon: Mails,
   },
+  {
+    title: "Email Templates",
+    url: "/dashboard/templates",
+    icon: Mail
+  }
 ]
 
 export function AppSidebar() {

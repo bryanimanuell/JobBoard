@@ -143,13 +143,13 @@ export function ApplicantDetailsModal({ isOpen, onClose, application }: ModalPro
                         <div className="flex-1">
                         <Select defaultValue={selectedStatus} onValueChange={setSelectedStatus}>
                             <SelectTrigger className="w-[220px] bg-gray-700 border-gray-600">
-                            <SelectValue placeholder="Change status..." />
+                                <SelectValue placeholder="Change status..." />
                             </SelectTrigger>
-                            <SelectContent>
-                            <SelectItem value="Under Review">Under Review</SelectItem>
-                            <SelectItem value="Invited for Interview">Invited for Interview</SelectItem>
-                            <SelectItem value="Accepted">Accepted</SelectItem>
-                            <SelectItem value="Rejected">Rejected</SelectItem>
+                            <SelectContent className='bg-gray-900 border-gray-600'>
+                                <SelectItem className='focus:bg-gray-100/10' value="Under Review">Under Review</SelectItem>
+                                <SelectItem className='focus:bg-gray-100/10' value="Invited for Interview">Invited for Interview</SelectItem>
+                                <SelectItem className='focus:bg-gray-100/10' value="Accepted">Accepted</SelectItem>
+                                <SelectItem className='focus:bg-gray-100/10' value="Rejected">Rejected</SelectItem>
                             </SelectContent>
                         </Select>
                         </div>

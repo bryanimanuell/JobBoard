@@ -45,12 +45,6 @@ export function ApplicationActions({ application }: { application: ApplicationWi
           <DropdownMenuItem className='focus:bg-gray-100/10' onClick={() => setIsModalOpen(true)}>
             View Details
           </DropdownMenuItem>
-          <DropdownMenuItem disabled className='text-green-500 focus:text-green-500'>
-            Accept
-          </DropdownMenuItem>
-          <DropdownMenuItem disabled className="text-red-500 focus:text-red-500">
-            Reject
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       
